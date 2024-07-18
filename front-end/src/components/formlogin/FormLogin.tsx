@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 
 const FormLogin: React.FC = () => {
+  const { login, reset } = useAuth();
+  const [userID, setUserID] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    login(userID, password)
   };
 
-  const handleReset = () => {};
+  const handleReset = () => {
+    setUserID("");
+    setPassword("");
+    reset();
+  };
 
   return (
     <div className="flex flex-col bg-[#00487B] w-[874px] py-[16px] px-[32px] rounded-[20px]">
@@ -29,6 +39,8 @@ const FormLogin: React.FC = () => {
                 name="userID"
                 placeholder="Masukan User ID Anda"
                 autoComplete="username"
+                value={userID}
+                onChange={(e)=> setUserID(e.target.value)}
               />
             </div>
             <div className="mb-[22px]">
@@ -36,15 +48,17 @@ const FormLogin: React.FC = () => {
                 className="block text-sm text-white mb-[9px] px-[14px]"
                 htmlFor="pin"
               >
-                Pin Internet Banking
+                Kata Sandi
               </label>
               <input
                 className="border rounded-[18px] py-[4px] px-[16px] w-[300px] text-sm"
-                id="pin"
+                id="password"
                 type="password"
-                name="pin"
-                placeholder="Masukan Pin Internet Banking Anda"
+                name="password"
+                placeholder="Masukan Password Internet Banking Anda"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e)=> setPassword(e.target.value)}
               />
             </div>
             <div className="flex justify-between items-center">
