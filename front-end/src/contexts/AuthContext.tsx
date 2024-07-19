@@ -1,95 +1,84 @@
-// AuthContext.tsx
-import React, {
-  createContext,
-  useState,
-  useContext,
-  ReactNode,
-  useEffect,
-} from "react";
-import axios from "axios";
+import React, { createContext, useContext, useState, ReactNode } from 'react';
+import axios, { AxiosError } from 'axios';
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
+interface ErrorResponse {
+  detail?: string;
+}
 
 interface AuthContextType {
-  userID: string | null;
-  login: (userID: string, password: string) => Promise<void>;
-  verifyPin: (pin: string) => Promise<boolean>;
+  accessToken: string | null;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
-  reset: () => void;
+  error: string | null;
+}
+
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [userID, setUserID] = useState<string | null>(null);
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const userIDCookie = getCookie("userID");
-    if (userIDCookie) {
-      setUserID(userIDCookie);
-    }
-  }, []);
-
-  const login = async (userID: string, password: string) => {
+  const login = async (username: string, password: string): Promise<void> => {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/users?userID=${userID}&password=${password}`
+      const response = await axios.post<{ accessToken: string }>(
+        `${apiUrl}/api/v1.0/auth/login`,
+        {
+          username,
+          password,
+        }
       );
-      if (response.data.length > 0) {
-        setUserID(userID);
-        document.cookie = `userID=${userID}; path=/;`;
-        document.cookie = `firstLogin=true; path=/;`;
+      setAccessToken(response.data.accessToken);
+      setError(null);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        handleLoginError(error);
       } else {
-        throw new Error("Invalid userID or password");
+        console.error("Login failed:", error);
+        setError("Login failed");
       }
-    } catch (error) {
-      console.error("Login failed", error);
-      throw error;
+      throw new Error("Login failed");
     }
   };
 
-  const verifyPin = async (pin: string): Promise<boolean> => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3001/users?userID=${userID}&pin=${pin}`
-      );
-      return response.data.length > 0;
-    } catch (error) {
-      console.error("PIN verification failed", error);
-      return false;
+  const handleLoginError = (error: AxiosError<ErrorResponse>): void => {
+    if (error.response && error.response.status === 401) {
+      const responseData = error.response.data as ErrorResponse;
+      const detail = responseData?.detail;
+      if (detail === "user not found" || detail === "unauthorized") {
+        setError(
+          "User ID / Kata Sandi yang Anda masukkan tidak sesuai. Mohon masukkan User ID / Kata Sandi Anda dengan benar."
+        );
+      } else {
+        setError("Terjadi kesalahan saat login.");
+      }
+    } else {
+      setError("Terjadi kesalahan saat melakukan permintaan.");
     }
   };
 
-  const logout = () => {
-    setUserID(null);
-    document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
-    document.cookie = `firstLogin=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
-  };
-
-  const reset = () => {
-    setUserID(null);
-    document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;`;
-  };
-
-  const getCookie = (name: string) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  const logout = (): void => {
+    setAccessToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ userID, login, verifyPin, logout, reset }}>
+    <AuthContext.Provider value={{ accessToken, login, logout, error }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => {
+const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
 
-export default AuthContext;
+export { AuthProvider, useAuth };
