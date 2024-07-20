@@ -32,6 +32,9 @@ export default {
           yellow: '#ffb831',
         },
       },
+      backgroundImage: {
+        'fill1': 'linear-gradient(to bottom, #1C1C1F 8%, #1C1C1E 26%, #0A3967 100%)',
+      },
     },
   },
   plugins: [],
