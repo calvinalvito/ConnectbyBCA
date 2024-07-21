@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "../components/header";
+import Header from "../components/layout/header";
 import { useNavigate } from "react-router-dom";
-import Button from "../components/button";
+import Button from "../components/base/button";
 
 const UnderMaintenance: React.FC = () => {
   const navigate = useNavigate();

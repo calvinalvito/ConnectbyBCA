@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../components/header";
-import FormLogin from "../components/formlogin";
-import Carousel from "../components/carousel";
-import Information from "../components/information";
+import Header from "../components/layout/header";
+import FormLogin from "../components/layout/formlogin";
+import Carousel from "../components/layout/carousel";
+import Information from "../components/layout/information";
 
 const Login: React.FC = () => {
   return (

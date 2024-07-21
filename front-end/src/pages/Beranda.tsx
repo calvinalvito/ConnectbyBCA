@@ -1,10 +1,10 @@
 import React from "react";
-import Header from "../components/header";
-import InfoRekening from "../components/inforekening";
-import InfoAkun from "../components/infoakun";
-import InfoUser from "../components/infouser";
-import MenuFitur from "../components/menufitur";
-import FastMenu from "../components/fastmenu";
+import Header from "../components/layout/header";
+import InfoRekening from "../components/layout/inforekening";
+import InfoAkun from "../components/layout/infoakun";
+import InfoUser from "../components/layout/infouser";
+import MenuFitur from "../components/layout/menufitur";
+import FastMenu from "../components/layout/fastmenu";
 
 const Beranda: React.FC = () => {
   return (
