@@ -4,6 +4,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import Popup from "../../base/popup";
 import ButtonIcon from "../../base/buttonicon";
 import Button from "../../base/button";
+import PinInput from "../../base/pininput";
 
 const FormLogin: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -13,6 +14,7 @@ const FormLogin: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [isPopupVisible, setPopupVisible] = useState(false);
+  const [showPinPopup, setShowPinPopup] = useState(false); // New state for PIN popup
   const [errors, setErrors] = React.useState<{
     username?: string;
     password?: string;
@@ -21,6 +23,7 @@ const FormLogin: React.FC = () => {
   const showPopup = () => {
     setPopupVisible(true);
   };
+
   const hidePopup = () => {
     setPopupVisible(false);
   };
@@ -63,6 +66,14 @@ const FormLogin: React.FC = () => {
     setShowErrorPopup(false);
   };
 
+  const handleShowPinPopup = () => {
+    setShowPinPopup(true); // Show PIN popup
+  };
+
+  // const handleHidePinPopup = () => {
+  //   setShowPinPopup(false); // Hide PIN popup
+  // };
+
   return (
     <div className="flex flex-col bg-[#00487B] w-[874px] py-[16px] px-[32px] rounded-[20px]">
       <h2 className="font-semibold text-[20px] text-white mx-auto">
@@ -96,7 +107,7 @@ const FormLogin: React.FC = () => {
             <div className="mb-[22px]">
               <label
                 className="block text-sm text-white mb-[9px] px-[14px]"
-                htmlFor="pin"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -107,7 +118,7 @@ const FormLogin: React.FC = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Masukan Pasword Anda"
+                placeholder="Masukan Password Anda"
                 autoComplete="current-password"
                 aria-describedby="Kolom Password"
               />
@@ -180,7 +191,7 @@ const FormLogin: React.FC = () => {
               <div className="flex gap-[40px] mt-[10px]">
                 <ButtonIcon
                   ariaLabel="Tombol transfer"
-                  onClick={showPopup}
+                  onClick={handleShowPinPopup} // Show PIN input popup
                   imgSrc="/Transfer.svg"
                   imgAlt="Transfer"
                   text="Transfer"
@@ -190,7 +201,7 @@ const FormLogin: React.FC = () => {
 
                 <ButtonIcon
                   ariaLabel="Tombol Menampilkan QRIS Bayar"
-                  onClick={showPopup}
+                  // onClick={}
                   imgSrc="/QRIS.svg"
                   imgAlt="QRIS Bayar"
                   text="QRIS Bayar"
@@ -200,7 +211,7 @@ const FormLogin: React.FC = () => {
 
                 <ButtonIcon
                   ariaLabel="Tombol Menampilkan Saldo Pada Rekening"
-                  onClick={showPopup}
+                  // onClick={}
                   imgSrc="/InfoSaldo.svg"
                   imgAlt="Info Saldo"
                   text="Info Saldo"
@@ -215,6 +226,8 @@ const FormLogin: React.FC = () => {
           </div>
         </div>
       </div>
+      {showPinPopup && <PinInput/>}{" "}
+      {/* Pass handler to PinInput */}
       {showErrorPopup && (
         <Popup
           message={error || "Terjadi kesalahan saat melakukan permintaan."}

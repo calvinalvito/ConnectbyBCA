@@ -34,6 +34,7 @@ export default {
       },
       backgroundImage: {
         'fill1': 'linear-gradient(to bottom, #1C1C1F 8%, #1C1C1E 26%, #0A3967 100%)',
+        'fill4': 'linear-gradient(to bottom, #0A3967 4%, #0066AE 96%)',
       },
     },
   },
