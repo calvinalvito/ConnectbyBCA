@@ -46,8 +46,8 @@ const Button: React.FC<ButtonProps> = ({
           : "bg-primary-blue text-white";
       case "secondary":
         return state === "active"
-          ? "bg-secondary-red text-white"
-          : "bg-secondary-red text-white";
+          ? "bg-primary-blue text-white"
+          : "bg-primary-blue text-white";
       case "reset":
         return state === "active"
           ? "bg-secondary-red text-white"

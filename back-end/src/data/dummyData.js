@@ -2,7 +2,7 @@ const data = {
     users: [
       {
         id: 1,
-        email: '[REDACTED]',
+        email: 'johndoe@gmail.com',
         name: 'John Doe',
         password: 'password123',
         pin: '1234',
@@ -17,7 +17,7 @@ const data = {
       {
         id: 1,
         user_id: 1,
-        account_number: '12345678901234567890123456789012',
+        account_number: '1234567890',
         account_card_exp: '2025-12-31',
         available_balance: 1000000.0,
         available_balance_curr: 'IDR',

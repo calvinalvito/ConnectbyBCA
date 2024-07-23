@@ -5,7 +5,7 @@ const FastMenu: React.FC = () => {
   return (
     <div className="flex flex-col col-span-2 items-center gap-[20px]">
       <h1 className="text-lg text-white font-bold">Fast Menu</h1>
-      <div className="flex gap-[40px] mt-[10px]">
+      <div className="flex gap-[40px] mt-[10px] mb-[120px]">
         <ButtonIcon
           ariaLabel="Tombol transfer"
           //   onClick={showPopup}
