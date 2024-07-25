@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../contexts/useAuth";
 import Popup from "../../base/popup";
 import ButtonIcon from "../../base/buttonicon";
 import Button from "../../base/button";
@@ -14,7 +14,7 @@ const FormLogin: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const [isPopupVisible, setPopupVisible] = useState(false);
-  const [showPinPopup, setShowPinPopup] = useState(false); // New state for PIN popup
+  const [showPinPopup, setShowPinPopup] = useState(false);
   const [errors, setErrors] = React.useState<{
     username?: string;
     password?: string;
@@ -47,8 +47,7 @@ const FormLogin: React.FC = () => {
     setIsLoading(true);
     try {
       await login(username, password);
-      alert("Login successful");
-      navigate("/beranda");
+      navigate("/");
     } catch (error) {
       setShowErrorPopup(true);
     } finally {

@@ -1,5 +1,3 @@
-// src/pages/InfoSaldo.tsx
-
 import React from "react";
 import { useLocation } from "react-router-dom";
 import Header from "../components/layout/header";
@@ -33,7 +31,7 @@ const SaldoMutasi: React.FC = () => {
         <div className="flex flex-row gap-[80px]">
           <Dropdown
             buttonLabel="Informasi Saldo & Mutasi"
-            activeItem={location.pathname} // Pass the current path as active item
+            activeItem={location.pathname}
             items={[
               {
                 label: "Informasi Saldo Rekening",

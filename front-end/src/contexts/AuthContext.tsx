@@ -1,15 +1,15 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
-import axios, { AxiosError } from 'axios';
+import React, { createContext, ReactNode } from "react";
+import axios, { AxiosError } from "axios";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 interface ErrorResponse {
-  detail?: string;
+  message?: string;
 }
 
-interface AuthContextType {
+export interface AuthContextType {
   accessToken: string | null;
-  login: (username: string, password: string) => Promise<void>;
+  login: (userID: string, password: string) => Promise<void>;
   logout: () => void;
   error: string | null;
 }
@@ -19,22 +19,24 @@ interface AuthProviderProps {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const accessToken = localStorage.getItem("accessToken");
+  const [error, setError] = React.useState<string | null>(null);
 
-  const login = async (username: string, password: string): Promise<void> => {
+  const login = async (userID: string, password: string): Promise<void> => {
     try {
-      const response = await axios.post<{ accessToken: string }>(
+      const response = await axios.post<{ data: { accessToken: string } }>(
         `${apiUrl}/api/v1.0/auth/login`,
-        {
-          username,
-          password,
-        }
+        { userID, password }
       );
-      setAccessToken(response.data.accessToken);
-      setError(null);
+      const token = response.data.data.accessToken;
+      if (token) {
+        localStorage.setItem("accessToken", token);
+        setError(null);
+      } else {
+        console.error("Token is undefined");
+        setError("Failed to retrieve access token");
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         handleLoginError(error);
@@ -48,9 +50,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const handleLoginError = (error: AxiosError<ErrorResponse>): void => {
     if (error.response && error.response.status === 401) {
-      const responseData = error.response.data as ErrorResponse;
-      const detail = responseData?.detail;
-      if (detail === "user not found" || detail === "unauthorized") {
+      const responseData = error.response.data;
+      const message = responseData?.message;
+
+      if (message === "user not found" || message === "unauthorized") {
         setError(
           "User ID / Kata Sandi yang Anda masukkan tidak sesuai. Mohon masukkan User ID / Kata Sandi Anda dengan benar."
         );
@@ -63,7 +66,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = (): void => {
-    setAccessToken(null);
+    localStorage.removeItem("accessToken");
   };
 
   return (
@@ -73,12 +76,4 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   );
 };
 
-const useAuth = (): AuthContextType => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
-export { AuthProvider, useAuth };
+export { AuthProvider, AuthContext };
