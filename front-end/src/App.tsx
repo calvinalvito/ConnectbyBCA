@@ -10,6 +10,7 @@ import Transaksi from "./pages/Transaksi";
 import InformasiLainya from "./pages/InformasiLainya";
 import SaldoMutasi from "./pages/saldomutasi";
 import InfoSaldo from "./pages/InfoSaldo";
+import PrivateRoute from "./components/PrivateRoutes";
 
 import "./index.css";
 
@@ -20,16 +21,79 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/maintenance" element={<UnderMaintenance />} />
-          <Route path="/" element={<Beranda />} />
-          <Route path="/saldo-mutasi" element={<SaldoMutasi />}>
-            <Route path="informasi-saldo-rekening" element={<InfoSaldo />} />
-            <Route path="mutasi-rekening" element={<InfoSaldo />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Beranda />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/saldo-mutasi"
+            element={
+              <PrivateRoute>
+                <SaldoMutasi />
+              </PrivateRoute>
+            }
+          >
+            <Route
+              path="informasi-saldo-rekening"
+              element={
+                <PrivateRoute>
+                  <InfoSaldo />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="mutasi-rekening"
+              element={
+                <PrivateRoute>
+                  <InfoSaldo />
+                </PrivateRoute>
+              }
+            />
           </Route>
-          <Route path="/transaksi" element={<Transaksi />} />
-          <Route path="/informasi-lainnya" element={<InformasiLainya />} />
-          <Route path="/administrasi" element={<Administrasi />} />
-          <Route path="/e-mail" element={<Email />} />
-          <Route path="/profil" element={<Profil />} />
+          <Route
+            path="/transaksi"
+            element={
+              <PrivateRoute>
+                <Transaksi />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/informasi-lainnya"
+            element={
+              <PrivateRoute>
+                <InformasiLainya />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/administrasi"
+            element={
+              <PrivateRoute>
+                <Administrasi />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/e-mail"
+            element={
+              <PrivateRoute>
+                <Email />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profil"
+            element={
+              <PrivateRoute>
+                <Profil />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </AuthProvider>
     </Router>
