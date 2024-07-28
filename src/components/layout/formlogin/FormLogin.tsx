@@ -19,7 +19,6 @@ const FormLogin: React.FC = () => {
   const showPopup = () => {
     setPopupVisible(true);
   };
-
   const hidePopup = () => {
     setPopupVisible(false);
   };
@@ -60,7 +59,6 @@ const FormLogin: React.FC = () => {
     setShowErrorPopup(false);
   };
 
-
   return (
     <div className="flex flex-col bg-[#00487B] w-[874px] py-[16px] px-[32px] rounded-[20px]">
       <h2 className="font-semibold text-[20px] text-white mx-auto">
@@ -94,7 +92,7 @@ const FormLogin: React.FC = () => {
             <div className="mb-[22px]">
               <label
                 className="block text-sm text-white mb-[9px] px-[14px]"
-                htmlFor="password"
+                htmlFor="pin"
               >
                 Password
               </label>
@@ -105,7 +103,7 @@ const FormLogin: React.FC = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Masukan Password Anda"
+                placeholder="Masukan Pasword Anda"
                 autoComplete="current-password"
                 aria-describedby="Kolom Password"
               />
@@ -172,10 +170,47 @@ const FormLogin: React.FC = () => {
             <br />
             Untuk informasi lebih lanjut hubungi Halo BCA 1500888.
           </p>
-          
+          <div className="flex mt-[30px] justify-between">
+            <div className="flex flex-col gap-2">
+              <h2 className="text-md text-white font-semibold">Fast Menu</h2>
+              <div className="flex gap-[40px] mt-[10px]">
+                <ButtonIcon
+                  ariaLabel="Tombol transfer"
+                  onClick={showPopup}
+                  imgSrc="/Transfer.svg"
+                  imgAlt="Transfer"
+                  text="Transfer"
+                  textClassName=""
+                  containerClassName="flex-col"
+                />
+
+                <ButtonIcon
+                  ariaLabel="Tombol Menampilkan QRIS Bayar"
+                  onClick={showPopup}
+                  imgSrc="/QRIS.svg"
+                  imgAlt="QRIS Bayar"
+                  text="QRIS Bayar"
+                  textClassName=""
+                  containerClassName="flex-col"
+                />
+
+                <ButtonIcon
+                  ariaLabel="Tombol Menampilkan Saldo Pada Rekening"
+                  onClick={showPopup}
+                  imgSrc="/InfoSaldo.svg"
+                  imgAlt="Info Saldo"
+                  text="Info Saldo"
+                  textClassName=""
+                  containerClassName="flex-col"
+                />
+              </div>
+            </div>
+            <div className="w-[80px]">
+              <img src="/digicert.png" alt="Digicert Logo" />
+            </div>
+          </div>
         </div>
       </div>
-      {/* Pass handler to PinInput */}
       {showErrorPopup && (
         <Popup
           message={error || "Terjadi kesalahan saat melakukan permintaan."}
