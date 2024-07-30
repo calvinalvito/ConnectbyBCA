@@ -3,6 +3,7 @@ import Login from "./pages/login";
 import UnderMaintenance from "./pages/UnderMaintenance";
 import { AuthProvider } from "./contexts/AuthContext";
 import { BankStatementProvider } from "./contexts/BankStatementContext";
+import { LoadingProvider } from "./contexts/LoadingContext";
 import Beranda from "./pages/Beranda";
 import Administrasi from "./pages/Administrasi";
 import Email from "./pages/Email";
@@ -20,6 +21,7 @@ function App() {
     <Router>
       <AuthProvider>
         <BankStatementProvider>
+          <LoadingProvider>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/maintenance" element={<UnderMaintenance />} />
@@ -97,6 +99,7 @@ function App() {
               }
             />
           </Routes>
+          </LoadingProvider>
         </BankStatementProvider>
       </AuthProvider>
     </Router>
