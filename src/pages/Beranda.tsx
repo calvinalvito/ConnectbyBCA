@@ -44,7 +44,7 @@ const Beranda: React.FC = () => {
           <InfoUser />
           <MenuFitur />
           <section className="container mx-auto mt-[50px] pb-[50px]">
-            <div className="grid grid-cols-3 grid-flow-row mb-[50px]">
+            <div className="grid grid-cols-3 grid-flow-row mb-[50px] gap-16">
               <InfoRekening showInfoAkun={true} />
               <FastMenu />
             </div>
