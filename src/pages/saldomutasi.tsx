@@ -13,9 +13,10 @@ import Preloading from "../components/base/preloading/preloading";
 
 const SaldoMutasi: React.FC = () => {
   const location = useLocation();
-  const { loading, setLoading } = useLoading(); // Use loading context
-  const { fetchLoginInfo } = useAuth(); // Use fetchLoginInfo
-  const { fetchBankStatement } = useBankStatement(); // Use fetchBankStatement
+  const { loading, setLoading } = useLoading();
+  const { fetchLoginInfo } = useAuth();
+  const { fetchBankStatement, fetchAccountMonthly } =
+    useBankStatement();
 
   const [hasFetchedData, setHasFetchedData] = useState(false);
 
@@ -24,7 +25,11 @@ const SaldoMutasi: React.FC = () => {
       const fetchData = async () => {
         setLoading(true);
         try {
-          await Promise.all([fetchLoginInfo(), fetchBankStatement()]);
+          await Promise.all([
+            fetchLoginInfo(),
+            fetchBankStatement(),
+            fetchAccountMonthly(8),
+          ]);
           setHasFetchedData(true);
         } catch (err) {
           console.error("Error fetching data", err);
@@ -35,7 +40,13 @@ const SaldoMutasi: React.FC = () => {
 
       fetchData();
     }
-  }, [hasFetchedData, fetchLoginInfo, fetchBankStatement, setLoading]);
+  }, [
+    hasFetchedData,
+    fetchLoginInfo,
+    fetchBankStatement,
+    fetchAccountMonthly,
+    setLoading,
+  ]);
 
   const renderContent = () => {
     switch (location.pathname) {
