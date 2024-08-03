@@ -60,8 +60,8 @@ const FormLogin: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col bg-[#00487B] w-[874px] py-[16px] px-[32px] rounded-[20px]">
-      <h2 className="font-semibold text-[20px] text-white mx-auto">
+    <div className="flex flex-col bg-[#00487B] w-[874px] py-[16px] px-[32px] rounded-[20px]" role="form" aria-labelledby="login-form-title">
+      <h2 id="login-form-title" className="font-semibold text-[20px] text-white mx-auto">
         Selamat Datang di Internet Banking Connect by BCA
       </h2>
       <div className="flex flex-row mt-[40px]">
@@ -83,8 +83,9 @@ const FormLogin: React.FC = () => {
                 name="userID"
                 placeholder="Masukan User ID Anda"
                 autoComplete="username"
-                aria-describedby="Kolom Masukkan USER ID"
+                aria-describedby="userID-description"
               />
+              <span id="userID-description" className="sr-only">Kolom Masukkan USER ID</span>
               {errors.username && (
                 <p className="text-red-500 text-xs mt-1">{errors.username}</p>
               )}
@@ -92,7 +93,7 @@ const FormLogin: React.FC = () => {
             <div className="mb-[22px]">
               <label
                 className="block text-sm text-white mb-[9px] px-[14px]"
-                htmlFor="pin"
+                htmlFor="password"
               >
                 Password
               </label>
@@ -103,10 +104,11 @@ const FormLogin: React.FC = () => {
                 name="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Masukan Pasword Anda"
+                placeholder="Masukan Password Anda"
                 autoComplete="current-password"
-                aria-describedby="Kolom Password"
+                aria-describedby="password-description"
               />
+              <span id="password-description" className="sr-only">Kolom Password</span>
               {errors.password && (
                 <p className="text-red-500 text-xs mt-1">{errors.password}</p>
               )}
@@ -121,7 +123,7 @@ const FormLogin: React.FC = () => {
                 isLoading={isLoading}
               >
                 {isLoading ? (
-                  <span className="h-4 w-4 border-2 border-t-2 border-t-transparent border-white rounded-full animate-spin"></span>
+                  <span className="h-4 w-4 border-2 border-t-2 border-t-transparent border-white rounded-full animate-spin" aria-hidden="true"></span>
                 ) : (
                   "Masuk"
                 )}
@@ -151,10 +153,10 @@ const FormLogin: React.FC = () => {
             />
 
             <ButtonIcon
-              ariaLabel="Tombol lupa pin"
+              ariaLabel="Tombol lupa password"
               onClick={showPopup}
               imgSrc="/ForgotPIN.svg"
-              imgAlt="Tombol lupa pin"
+              imgAlt="Tombol lupa password"
               text="Lupa Kata Sandi?"
               textClassName="underline text-white"
               containerClassName=""
@@ -164,8 +166,7 @@ const FormLogin: React.FC = () => {
         <div className="flex flex-col ml-[90px]">
           <p className="text-sm text-white text-justify w-[320px]">
             Informasi :<br />
-            USER ID dan PIN Internet Banking dapat diperoleh pada saat Anda
-            melakukan Registrasi Internet melalui ATM BCA.
+            USER ID dan PIN Internet Banking dapat diperoleh pada saat Anda melakukan Registrasi Internet melalui ATM BCA.
             <br />
             <br />
             Untuk informasi lebih lanjut hubungi Halo BCA 1500888.

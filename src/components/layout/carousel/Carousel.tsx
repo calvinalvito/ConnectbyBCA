@@ -17,6 +17,7 @@ const Carousel: React.FC = () => {
         id="default-carousel"
         className="relative w-full"
         data-carousel="slide"
+        aria-roledescription="carousel"
       >
         <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
           {images.map((imageUrl, index) => (
@@ -26,6 +27,10 @@ const Carousel: React.FC = () => {
                 index === activeIndex ? "" : "hidden"
               }`}
               data-carousel-item
+              aria-hidden={index !== activeIndex}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`Slide ${index + 1}`}
             >
               <img
                 src={imageUrl}
@@ -42,7 +47,9 @@ const Carousel: React.FC = () => {
               key={index}
               type="button"
               className={`w-[8px] h-[8px] rounded-full ${
-                index === activeIndex ? "bg-primary-blue w-[40px]" : "bg-gray-300"
+                index === activeIndex
+                  ? "bg-primary-blue w-[40px]"
+                  : "bg-gray-300"
               }`}
               aria-current={index === activeIndex ? "true" : "false"}
               aria-label={`Slide ${index + 1}`}
@@ -57,9 +64,9 @@ const Carousel: React.FC = () => {
           className="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
           data-carousel-next
           onClick={handleNext}
-          aria-label="Tombol Swipe Banner"
+          aria-label="Tombol Next Slide"
         >
-          <img src="/SwipeBanner.svg" alt="Next Swipe" />
+          <img src="/SwipeBanner.svg" alt="Next Slide" />
           <span className="sr-only">Next</span>
         </button>
       </div>
