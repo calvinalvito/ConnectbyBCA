@@ -1,10 +1,22 @@
-import React from "react";
-import Mutasirekening from "../components/layout/mutasirekening";
+import MutasiLayout from '../components/layout/MutasiLayout';
+import { useLoading } from '../contexts/useLoading';
+import Preloading from "../components/base/preloading/preloading";
 
-const MutasiRekening: React.FC = () => {
+function MutasiRekening() {
+  // const [isPopupVisible, setIsPopupVisible] = useState(false)
+  const { loading} = useLoading();
+
   return (
-    <Mutasirekening/>
-  );
-};
+    <>
+      {
+        loading ? (
+          <Preloading />
+        ) : (
+          <MutasiLayout />
+        )
+      }
+    </>
+  )
+}
 
-export default MutasiRekening;
+export default MutasiRekening
