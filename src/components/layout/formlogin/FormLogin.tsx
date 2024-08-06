@@ -60,7 +60,7 @@ const FormLogin: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col bg-[#00487B] w-[874px] py-[16px] px-[32px] rounded-[20px]" role="form" aria-labelledby="login-form-title">
+    <div className="flex flex-col bg-primary-blue w-[874px] py-[16px] px-[32px] rounded-[20px]" role="form" aria-labelledby="login-form-title">
       <h2 id="login-form-title" className="font-semibold text-[20px] text-white mx-auto">
         Selamat Datang di Internet Banking Connect by BCA
       </h2>
@@ -108,7 +108,7 @@ const FormLogin: React.FC = () => {
                 autoComplete="current-password"
                 aria-describedby="password-description"
               />
-              <span id="password-description" className="sr-only">Kolom Password</span>
+              <span id="password-description" className="sr-only">Kolom Masukan Password</span>
               {errors.password && (
                 <p className="text-red-500 text-xs mt-1">{errors.password}</p>
               )}

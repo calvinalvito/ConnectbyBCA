@@ -11,7 +11,7 @@ const Information: React.FC = () => {
 
   return (
     <div className="flex flex-row gap-[27px] mb-10">
-      <div className="flex flex-col bg-[#00487B] w-[874px] py-[16px] px-[32px] rounded-[20px] items-center">
+      <div className="flex flex-col bg-primary-blue w-[874px] py-[16px] px-[32px] rounded-[20px] items-center">
         <h2 className="text-white text-md font-semibold">
           Cari Tahu Lebih Lanjut
         </h2>
@@ -47,7 +47,7 @@ const Information: React.FC = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col bg-[#00487B] w-[437px] py-[16px] px-[32px] rounded-[20px] items-center">
+      <div className="flex flex-col bg-primary-blue w-[437px] py-[16px] px-[32px] rounded-[20px] items-center">
         <h2 className="text-white text-md font-semibold">Butuh Bantuan ?</h2>
         <div className="flex flex-row gap-[14px] mt-[18px]">
           <ButtonIcon
